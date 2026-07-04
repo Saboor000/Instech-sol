@@ -61,7 +61,7 @@ export default function AboutPage() {
 
       {/* Mission */}
       <section className="relative py-20">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_40%_at_50%_50%,rgba(139,92,246,0.05),transparent)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_40%_at_50%_50%,rgba(139,92,246,0.05),transparent)] dark-only" />
         <div className="mx-auto max-w-[1400px] px-6 md:px-10">
           <div className="grid gap-16 md:grid-cols-2 md:items-center">
             <Reveal>

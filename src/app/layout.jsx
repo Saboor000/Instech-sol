@@ -1,5 +1,6 @@
 import "../styles.css";
 
+import Script from "next/script";
 import { CustomCursor, Footer, Navbar } from "@/components/site/shared";
 import FooterCTAWrapper from "@/components/site/footer-cta-wrapper";
 
@@ -37,9 +38,27 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark" data-scroll-behavior="smooth">
+    <html lang="en" className="dark" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: `
+          (function() {
+            try {
+              var saved = localStorage.getItem('theme');
+              var pref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+              var theme = saved || pref;
+              if (theme === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+              } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+              }
+            } catch (e) {}
+          })()
+        ` }} />
+      </head>
       <body>
-        <div className="relative bg-background text-foreground">
+        <div className="relative bg-transparent text-foreground">
           <div className="grain-overlay" aria-hidden />
           <CustomCursor />
           <Navbar />

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { ArrowUpRight, ArrowRight, Github, Twitter, Linkedin, Instagram, Mail, MessageSquare } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Github, Twitter, Linkedin, Instagram, Mail, Phone, MapPin, Sun, Moon } from "lucide-react";
 
 const logoAsset = {
   url: "/assets/instech-logo.png",
@@ -102,7 +102,7 @@ export function Reveal({ children, delay = 0, className = "" }) {
   );
 }
 
-export function SectionLabel({ n, children }) {
+export function SectionLabel({ n, children, hideLine = false }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -30 }}
@@ -112,13 +112,6 @@ export function SectionLabel({ n, children }) {
       className="mb-8 flex items-center gap-4"
     >
       <span className="font-mono text-xs text-accent">{n}</span>
-      <motion.span
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.15 }}
-        className="block h-px w-16 origin-left bg-accent"
-      />
       <span className="text-xs font-medium uppercase tracking-[0.3em] text-white/60">{children}</span>
     </motion.div>
   );
@@ -149,7 +142,7 @@ export function PageHero({ eyebrow, title, italic, description }) {
   return (
     <section className="relative overflow-hidden pt-40 pb-24">
       <CodeBackdrop />
-      <div className="absolute -top-40 left-1/2 h-125 w-125 -translate-x-1/2 rounded-full bg-primary/15 blur-[130px]" />
+      <div className="dark-only absolute -top-40 left-1/2 h-125 w-125 -translate-x-1/2 rounded-full bg-primary/15 blur-[130px]" />
       <div className="relative mx-auto max-w-350 px-6 md:px-10">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -247,18 +240,44 @@ const NAV_DROPDOWNS = {
 };
 
 function NavDropdown({ dropdown, visible }) {
+  const [isLight, setIsLight] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsLight(document.documentElement.classList.contains("light"));
+    check();
+    const observer = new MutationObserver(check);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 8, scale: 0.97 }}
       animate={visible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 8, scale: 0.97 }}
       transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      className="pointer-events-none absolute left-1/2 top-full mt-3 w-85 -translate-x-1/2 rounded-2xl border border-white/10 bg-background/95 p-4 shadow-[0_24px_60px_rgba(0,0,0,0.6)] backdrop-blur-xl"
-      style={{ pointerEvents: visible ? "auto" : "none" }}
+      className="nav-dropdown pointer-events-none absolute left-1/2 top-full mt-3 w-85 -translate-x-1/2 rounded-2xl border p-4 backdrop-blur-xl"
+      style={{
+        pointerEvents: visible ? "auto" : "none",
+        background: isLight ? "rgba(255,255,255,0.97)" : "rgba(14,15,22,0.97)",
+        borderColor: isLight ? "rgba(17,24,39,0.1)" : "rgba(255,255,255,0.08)",
+        boxShadow: isLight
+          ? "0 20px 48px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.05)"
+          : "0 24px 60px rgba(0,0,0,0.6)",
+      }}
     >
       {/* Arrow */}
-      <div className="absolute -top-1.25 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 rounded-sm border-l border-t border-white/10 bg-background/95" />
+      <div
+        className="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 rounded-sm border-l border-t"
+        style={{
+          background: isLight ? "rgba(255,255,255,0.97)" : "rgba(14,15,22,0.97)",
+          borderColor: isLight ? "rgba(17,24,39,0.1)" : "rgba(255,255,255,0.08)",
+        }}
+      />
 
-      <p className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30">
+      <p
+        className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
+        style={{ color: isLight ? "rgba(17,24,39,0.4)" : "rgba(255,255,255,0.3)" }}
+      >
         {dropdown.heading}
       </p>
 
@@ -267,32 +286,104 @@ function NavDropdown({ dropdown, visible }) {
           <Link
             key={item.href}
             href={item.href}
-            className="group flex items-start gap-2.5 rounded-xl px-2.5 py-2.5 transition-all duration-150 hover:bg-white/5"
+            className="nav-dropdown-item group flex items-start gap-2.5 rounded-xl px-2.5 py-2.5 transition-all duration-200"
+            style={{ background: "transparent" }}
+            onMouseEnter={e => e.currentTarget.style.background = isLight ? "rgba(17,24,39,0.05)" : "rgba(255,255,255,0.05)"}
+            onMouseLeave={e => e.currentTarget.style.background = "transparent"}
           >
             <div className="flex h-5 w-1.5 items-center justify-start shrink-0">
               <span className="h-1 w-1 rounded-full bg-accent opacity-0 scale-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100" />
             </div>
-            
+
             <div className="min-w-0 flex-1 transition-transform duration-300 group-hover:translate-x-1">
-              <div className="text-sm font-medium text-white/90 group-hover:text-white">{item.label}</div>
-              <div className="mt-0.5 text-xs text-white/40 group-hover:text-white/60">{item.desc}</div>
+              <div
+                className="text-sm font-medium transition-colors duration-200"
+                style={{ color: isLight ? "rgba(17,24,39,0.85)" : "rgba(255,255,255,0.9)" }}
+              >
+                {item.label}
+              </div>
+              <div
+                className="mt-0.5 text-xs"
+                style={{ color: isLight ? "rgba(17,24,39,0.45)" : "rgba(255,255,255,0.4)" }}
+              >
+                {item.desc}
+              </div>
             </div>
-            
-            <ArrowUpRight className="ml-auto mt-0.5 h-3.5 w-3.5 shrink-0 opacity-0 transition-all duration-150 group-hover:opacity-100 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+
+            <ArrowUpRight
+              className="ml-auto mt-0.5 h-3.5 w-3.5 shrink-0 opacity-0 transition-all duration-150 group-hover:opacity-100 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
           </Link>
         ))}
       </div>
 
-      <div className="mt-3 border-t border-white/5 pt-3">
+      <div
+        className="mt-3 pt-3"
+        style={{ borderTop: `1px solid ${isLight ? "rgba(17,24,39,0.08)" : "rgba(255,255,255,0.05)"}` }}
+      >
         <Link
           href={dropdown.cta.href}
-          className="group flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold uppercase tracking-wider text-accent transition-colors hover:bg-accent/5"
+          className="nav-dropdown-cta group flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold uppercase tracking-wider text-accent transition-all duration-200"
+          style={{ background: "transparent" }}
+          onMouseEnter={e => e.currentTarget.style.background = "rgba(20,184,166,0.06)"}
+          onMouseLeave={e => e.currentTarget.style.background = "transparent"}
         >
           {dropdown.cta.label}
           <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </Link>
       </div>
     </motion.div>
+  );
+}
+
+/* ---------------- Theme Toggle ---------------- */
+export function ThemeToggle() {
+  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState("dark");
+
+  useEffect(() => {
+    setMounted(true);
+    const isLight = document.documentElement.classList.contains("light");
+    setTheme(isLight ? "light" : "dark");
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    if (nextTheme === "light") {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+      localStorage.setItem("theme", "dark");
+    }
+  };
+
+  if (!mounted) {
+    return <div className="h-9 w-9" />;
+  }
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/3 backdrop-blur transition-all duration-300 hover:border-white/35 hover:bg-white/10 text-white cursor-pointer"
+      aria-label="Toggle theme"
+    >
+      <div className="relative h-4.5 w-4.5 flex items-center justify-center">
+        <Sun
+          className={`absolute h-4.5 w-4.5 transition-all duration-500 transform ${
+            theme === "light" ? "scale-100 rotate-0 opacity-100" : "scale-0 rotate-90 opacity-0"
+          }`}
+        />
+        <Moon
+          className={`absolute h-4.5 w-4.5 transition-all duration-500 transform ${
+            theme === "dark" ? "scale-100 rotate-0 opacity-100" : "scale-0 -rotate-90 opacity-0"
+          }`}
+        />
+      </div>
+    </button>
   );
 }
 
@@ -335,8 +426,8 @@ export function Navbar() {
       <div className="mx-auto flex max-w-350 items-center justify-between px-6 py-4 md:px-10">
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-3 shrink-0">
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-white border border-white/20 shadow-sm transition-all duration-300 group-hover:shadow-[0_0_16px_rgba(255,255,255,0.3)]">
-            <img src={logoAsset.url} alt="Instech Sol" width={28} height={28} className="h-7 w-7 object-contain transition-transform duration-300 group-hover:scale-110" />
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-white border border-white/20 shadow-sm">
+            <img src={logoAsset.url} alt="Instech Sol" width={28} height={28} className="h-7 w-7 object-contain" />
           </div>
           <div className="flex flex-col leading-none">
             <span className="font-display text-[15px] font-bold tracking-[-0.02em] text-white">
@@ -394,16 +485,17 @@ export function Navbar() {
           </div>
         </nav>
 
-        {/* Right side � CTA + mobile menu */}
+        {/* Right side - CTA + mobile menu */}
         <div className="flex items-center gap-3 shrink-0">
           <Link
             href="/contact"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-accent/10 border border-accent/25 px-4 py-2 text-xs font-semibold text-accent uppercase tracking-widest transition-all duration-300 hover:bg-accent hover:text-background hover:border-accent hover:shadow-[0_0_20px_rgba(20,184,166,0.4)]"
+            className="navbar-cta hidden sm:inline-flex items-center gap-2 rounded-full bg-accent/10 border border-accent/25 px-4 py-2 text-xs font-semibold text-accent uppercase tracking-widest transition-all duration-300 hover:bg-accent hover:text-background hover:border-accent hover:shadow-[0_0_20px_rgba(20,184,166,0.4)]"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse inline-block" />
             Start a project
             <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
+
+          <ThemeToggle />
 
           {/* Mobile hamburger */}
           <button
@@ -479,9 +571,9 @@ export function FooterCTA() {
   return (
     <section className="relative overflow-hidden bg-background py-24 md:py-32">
       {/* Ambient glows */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-125 w-175 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
-      <div className="pointer-events-none absolute left-1/4 top-1/2 h-75 w-75 -translate-y-1/2 rounded-full bg-accent/8 blur-[100px]" />
-      <div className="pointer-events-none absolute right-1/4 top-1/2 h-75 w-75 -translate-y-1/2 rounded-full bg-brand-purple/10 blur-[100px]" />
+      <div className="dark-only pointer-events-none absolute left-1/2 top-1/2 h-125 w-175 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
+      <div className="dark-only pointer-events-none absolute left-1/4 top-1/2 h-75 w-75 -translate-y-1/2 rounded-full bg-accent/8 blur-[100px]" />
+      <div className="dark-only pointer-events-none absolute right-1/4 top-1/2 h-75 w-75 -translate-y-1/2 rounded-full bg-brand-purple/10 blur-[100px]" />
 
       <div className="relative mx-auto max-w-250 px-6 text-center md:px-10">
         <Reveal>
@@ -499,15 +591,15 @@ export function FooterCTA() {
 
         <Reveal delay={0.15}>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/50 md:text-lg">
-            From AI-powered apps to enterprise platforms � we&apos;re ready to help. Schedule a free consultation and let&apos;s map your roadmap together.
+            From AI-powered apps to enterprise platforms — we&apos;re ready to help. Schedule a free consultation and let&apos;s map your roadmap together.
           </p>
         </Reveal>
 
         <Reveal delay={0.22}>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <MagneticButton as="a" href="/contact" className="px-7! py-3.5! shadow-[0_0_30px_rgba(139,92,246,0.25)] hover:shadow-[0_0_30px_rgba(20,184,166,0.4)]">
-              <MessageSquare className="h-4 w-4" />
               Free Consultation
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </MagneticButton>
             <Link
               href="/services"
@@ -547,9 +639,9 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-background pt-16 pb-8">
       {/* Background Ambient Glows */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-65 w-130 rounded-full bg-primary/5 blur-[100px] pointer-events-none z-0" />
-      <div className="absolute bottom-0 right-0 h-[260px] w-[260px] rounded-full bg-accent/5 blur-[100px] pointer-events-none z-0" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:32px_32px] opacity-40 pointer-events-none z-0" />
+      <div className="dark-only absolute bottom-0 left-1/2 -translate-x-1/2 h-65 w-130 rounded-full bg-primary/5 blur-[100px] pointer-events-none z-0" />
+      <div className="dark-only absolute bottom-0 right-0 h-[260px] w-[260px] rounded-full bg-accent/5 blur-[100px] pointer-events-none z-0" />
+      <div className="dark-only absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:32px_32px] opacity-40 pointer-events-none z-0" />
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid gap-10 border-b border-white/5 pb-10 md:grid-cols-4">
@@ -598,20 +690,20 @@ export function Footer() {
                 <li key={l.to}>
                   <Link
                     href={l.to}
-                    className="group flex items-center gap-1 text-sm font-medium text-white/70 transition-all duration-300 hover:text-accent hover:translate-x-1.5"
+                    className="group flex items-center gap-1 text-sm font-medium text-white/70 transition-[color,transform] duration-300 ease-out hover:text-accent hover:translate-x-1.5"
                   >
                     <span>{l.label}</span>
-                    <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <ArrowUpRight className="h-3 w-3 opacity-0 transition-[opacity,transform] duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                 </li>
               ))}
               <li>
                 <Link
                   href="/contact"
-                  className="group flex items-center gap-1 text-sm font-medium text-white/70 transition-all duration-300 hover:text-accent hover:translate-x-1.5"
+                  className="group flex items-center gap-1 text-sm font-medium text-white/70 transition-[color,transform] duration-300 ease-out hover:text-accent hover:translate-x-1.5"
                 >
                   <span>Contact</span>
-                  <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <ArrowUpRight className="h-3 w-3 opacity-0 transition-[opacity,transform] duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
               </li>
             </ul>
@@ -621,15 +713,44 @@ export function Footer() {
           <div className="flex flex-col gap-6">
             <div>
               <div className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-white/30">Contact</div>
-              <a
-                href="mailto:Info@instechsol.com"
-                className="group flex items-center gap-2.5 text-sm font-medium text-white/80 transition-colors hover:text-accent"
-              >
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/5 transition-all duration-300 group-hover:border-accent/40 group-hover:bg-accent/5 group-hover:text-accent">
-                  <Mail className="h-4 w-4 transition-transform group-hover:scale-110" />
+              <div className="space-y-4 text-sm font-medium text-white/80">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/5 text-white/70">
+                    <Mail className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-white/30">Official Email</div>
+                    <a href="mailto:Info@instechsol.com" className="transition-colors hover:text-accent">Info@instechsol.com</a>
+                  </div>
                 </div>
-                Info@instechsol.com
-              </a>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/5 text-white/70">
+                    <Phone className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-white/30">Landline</div>
+                    <a href="tel:+92516159159" className="transition-colors hover:text-accent">+92 51 6159159</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/5 text-white/70">
+                    <Phone className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-white/30">Phone</div>
+                    <a href="tel:+923709006009" className="transition-colors hover:text-accent">+92 3709006009</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/5 text-white/70">
+                    <MapPin className="h-4 w-8" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-white/30">Our Location</div>
+                    <div className="max-w-sm text-white/80">Office 19, 4th Floor, Pakland City Center, I-8 Markaz, Islamabad.</div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -640,7 +761,7 @@ export function Footer() {
                     key={i}
                     href={s.href}
                     whileHover={{ y: -4, scale: 1.05 }}
-                    className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.015] text-white/60 transition-all duration-300 hover:border-accent hover:bg-accent hover:text-background hover:shadow-[0_0_15px_rgba(20,184,166,0.3)]"
+                    className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.015] text-white/60 transition-all duration-300 hover:border-accent hover:bg-accent hover:text-white hover:shadow-[0_0_15px_rgba(20,184,166,0.3)]"
                   >
                     <s.Icon className="h-4.5 w-4.5" />
                   </motion.a>
@@ -652,9 +773,8 @@ export function Footer() {
 
         {/* Footer Bottom Row */}
         <div className="mt-6 flex flex-col items-center justify-between gap-4 text-xs text-white/40 md:flex-row">
-          <div className="flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-            ? {new Date().getFullYear()} Instech Sol. All rights reserved.
+          <div>
+            &copy; {new Date().getFullYear()} Instech Sol. All rights reserved.
           </div>
           
           {/* Back to top dynamic scroll button */}
@@ -682,19 +802,19 @@ export function CTASection() {
       <motion.div
         animate={{ scale: [1, 1.1, 1], x: [-10, 10, -10] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[130px] -z-10"
+        className="dark-only absolute left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[130px] -z-10"
       />
       <motion.div
         animate={{ scale: [1, 1.2, 1], x: [20, -20, 20] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-1/4 bottom-1/4 h-[400px] w-[400px] rounded-full bg-brand-mint/10 blur-[110px] -z-10"
+        className="dark-only absolute right-1/4 bottom-1/4 h-[400px] w-[400px] rounded-full bg-brand-mint/10 blur-[110px] -z-10"
       />
 
       <div className="relative mx-auto max-w-[1200px] px-6 md:px-10">
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.01] p-12 md:p-24 backdrop-blur-2xl text-center shadow-[0_30px_90px_-25px_rgba(139,92,246,0.3)]">
             {/* Radial card highlight spotlight */}
-            <div className="absolute inset-0 bg-[radial-gradient(800px_circle_at_50%_50%,rgba(139,92,246,0.06),transparent_80%)] pointer-events-none" />
+            <div className="dark-only absolute inset-0 bg-[radial-gradient(800px_circle_at_50%_50%,rgba(139,92,246,0.06),transparent_80%)] pointer-events-none" />
 
             <h2 className="relative z-10 font-display text-5xl font-bold leading-[0.95] tracking-tighter md:text-[7vw] text-white">
               Let's build <br />

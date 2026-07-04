@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, MapPin, Send, Check, Loader2 } from "lucide-react";
+import { Mail, MapPin, Send, Check, Loader2, Phone } from "lucide-react";
 import { Reveal, SectionLabel, PageHero, Dot, MagneticButton } from "@/components/site/shared";
 
 const fields = [
@@ -96,21 +96,36 @@ export default function ContactPage() {
         <div className="mx-auto grid max-w-[1400px] gap-16 px-6 md:grid-cols-[1fr_1.4fr] md:px-10">
           <Reveal>
             <SectionLabel n="/ 01">Reach us</SectionLabel>
-            <div className="space-y-8">
-              <div>
+            <div className="space-y-6">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.015] p-5">
                 <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-white/50">
-                  <Mail className="h-4 w-4 text-accent" /> Email
+                  <Mail className="h-4 w-4 text-accent" /> Official Email
                 </div>
                 <a href="mailto:Info@instechsol.com" className="font-display text-2xl hover:text-accent md:text-3xl">
                   Info@instechsol.com
                 </a>
               </div>
-              <div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.015] p-5">
                 <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-white/50">
-                  <MapPin className="h-4 w-4 text-accent" /> Studio
+                  <Phone className="h-4 w-4 text-accent" /> Landline
                 </div>
-                <div className="font-display text-2xl md:text-3xl">Islamabad, Pakistan</div>
-                <p className="mt-2 text-sm text-white/50">Open Mon–Fri · 10am–7pm PKT</p>
+                <a href="tel:+92516159159" className="font-display text-2xl hover:text-accent md:text-3xl">
+                  +92 51 6159159
+                </a>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.015] p-5">
+                <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-white/50">
+                  <Phone className="h-4 w-4 text-accent" /> Phone
+                </div>
+                <a href="tel:+923709006009" className="font-display text-2xl hover:text-accent md:text-3xl">
+                  +92 3709006009
+                </a>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.015] p-5">
+                <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-white/50">
+                  <MapPin className="h-4 w-4 text-accent" /> Our Location
+                </div>
+                <div className="font-display text-2xl md:text-3xl">Office 19, 4th Floor, Pakland City Center, I-8 Markaz, Islamabad.</div>
               </div>
               <div className="border-t border-white/10 pt-6">
                 <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-widest text-white/50">

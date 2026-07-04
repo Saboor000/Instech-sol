@@ -6,8 +6,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import {
   ArrowRight, ArrowUpRight, CheckCircle2, ChevronRight, Quote,
-  Activity, Terminal, Zap, Brain, Sparkles, Globe, Shield,
-  Clock, Users, TrendingUp, Award, Star,
+  Globe, Shield, Clock, Users, TrendingUp, Award, Star, Brain,Sparkles 
 } from "lucide-react";
 import {
   CodeBackdrop, Dot, MagneticButton, Reveal, SectionLabel, Counter,
@@ -41,7 +40,7 @@ function FloatingHeroWidgets() {
           <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">production-deploy</span>
         </div>
         <div className="space-y-2 font-mono text-[11px] text-white/70">
-          <p className="flex items-center gap-1.5 text-white/40"><Terminal className="h-3 w-3" /> instech-deploy --prod</p>
+          <p className="text-white/40">&gt; instech-deploy --prod</p>
           <p className="flex items-center gap-1.5"><span className="text-brand-mint">✔</span> next build: 104 pages [2.8s]</p>
           <p className="flex items-center gap-1.5"><span className="text-brand-mint">✔</span> edge CDN: 100% propagated</p>
           <div className="mt-4 flex items-center gap-2 border-t border-white/5 pt-3">
@@ -60,14 +59,9 @@ function FloatingHeroWidgets() {
         className="group relative w-[95%] self-start rounded-xl border border-white/10 bg-white/[0.02] p-5 shadow-2xl backdrop-blur-xl transition-all duration-300"
       >
         <div className="mb-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-primary/20 bg-primary/10">
-              <Zap className="h-4 w-4 text-brand-purple" />
-            </div>
-            <div>
-              <h4 className="font-display text-xs font-bold uppercase tracking-wider text-white">Performance Audit</h4>
-              <p className="text-[9px] font-mono text-white/40">Real-time Web Vitals</p>
-            </div>
+          <div>
+            <h4 className="font-display text-xs font-bold uppercase tracking-wider text-white">Performance Audit</h4>
+            <p className="text-[9px] font-mono text-white/40">Real-time Web Vitals</p>
           </div>
           <span className="rounded border border-brand-mint/10 bg-brand-mint/5 px-2 py-0.5 font-mono text-[10px] font-semibold text-brand-mint">100/100</span>
         </div>
@@ -82,7 +76,7 @@ function FloatingHeroWidgets() {
         </div>
       </motion.div>
 
-      {/* AI Activity widget */}
+      {/* Client satisfaction widget */}
       <motion.div
         initial={{ opacity: 0, x: 50, y: 20 }}
         animate={{ opacity: 1, x: 0, y: 0 }}
@@ -91,20 +85,17 @@ function FloatingHeroWidgets() {
         className="group relative w-[88%] self-end rounded-xl border border-white/10 bg-white/[0.015] p-5 shadow-2xl backdrop-blur-xl transition-all duration-300"
       >
         <div className="mb-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Brain className="h-3.5 w-3.5 animate-pulse text-violet-400" />
-            <span className="text-[9px] font-mono uppercase tracking-widest text-white/40">AI Pipeline Active</span>
-          </div>
+          <span className="text-[9px] font-mono uppercase tracking-widest text-white/40">Project Delivery</span>
           <span className="h-1.5 w-1.5 rounded-full bg-brand-mint animate-pulse" />
         </div>
         <div className="space-y-2 text-xs">
           {[
-            { l: "RAG Knowledge Query", s: "Processed", c: "text-brand-mint" },
-            { l: "LLM Response Stream", s: "Active", c: "text-violet-400", pulse: true },
+            { l: "On-time delivery rate", v: "99%", c: "text-brand-mint" },
+            { l: "Client satisfaction", v: "4.9 / 5", c: "text-violet-400" },
           ].map((item) => (
             <div key={item.l} className="flex items-center justify-between rounded border border-white/5 bg-white/[0.05] p-2">
               <span className="font-medium text-white/80">{item.l}</span>
-              <span className={`${item.pulse ? "animate-pulse" : ""} rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[9px] ${item.c}`}>{item.s}</span>
+              <span className={`font-mono text-[10px] font-semibold ${item.c}`}>{item.v}</span>
             </div>
           ))}
         </div>
@@ -123,27 +114,27 @@ export function Hero() {
   };
 
   return (
-    <section id="top" className="relative flex min-h-screen items-center overflow-hidden">
+    <section id="top" className="relative flex min-h-screen items-center overflow-hidden bg-background text-white" style={{ "--white": "#aaaaaa" }}>
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <div className="absolute inset-0 ken-burns">
-          <img src="/assets/hero-computer.jpg" alt="" className="h-full w-full object-cover grayscale opacity-90" />
+          <img src="/assets/hero-computer.jpg" alt="" className="h-full w-full object-cover grayscale opacity-68" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/50 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(255,255,255,0.04),transparent_26%),radial-gradient(circle_at_78%_24%,rgba(0,0,0,0.58),transparent_30%),linear-gradient(135deg,rgba(2,3,6,0.72) 0%,rgba(2,3,6,0.9) 50%,rgba(2,3,6,0.98) 100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent" />
       </motion.div>
 
       {/* Animated gradient orbs */}
       <motion.div
         animate={{ scale: [1, 1.15, 1], x: [0, 20, 0], y: [0, -30, 0] }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute left-[5%] top-[15%] h-[350px] w-[350px] rounded-full bg-primary/10 blur-[100px] z-0"
+        className="pointer-events-none absolute left-[5%] top-[15%] h-[350px] w-[350px] rounded-full bg-black/60 blur-[110px] z-0"
       />
       <motion.div
         animate={{ scale: [1, 1.2, 1], x: [0, -40, 0], y: [0, 40, 0] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute bottom-[15%] right-[5%] h-[450px] w-[450px] rounded-full bg-accent/8 blur-[120px] z-0"
+        className="pointer-events-none absolute bottom-[15%] right-[5%] h-[450px] w-[450px] rounded-full bg-black/45 blur-[120px] z-0"
       />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px] opacity-80 z-0" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] opacity-12 z-0" />
       <CodeBackdrop />
 
       <div className="relative z-10 mx-auto grid w-full max-w-[1400px] grid-cols-1 items-center gap-16 px-6 pb-24 pt-40 md:px-10 lg:grid-cols-12">
@@ -153,13 +144,12 @@ export function Hero() {
             transition={{ delay: 0.3, duration: 0.7 }}
             className="mb-6 flex items-center gap-4"
           >
-            <span className="h-px w-12 bg-accent shadow-[0_0_8px_rgba(20,184,166,0.6)]" />
-            <span className="font-italic text-xs italic tracking-[0.15em] text-accent/80">
+            <span className="font-italic text-xs italic tracking-[0.15em] text-brand-mint/80">
               Innovate. Build. Scale.
             </span>
           </motion.div>
 
-          <h1 className="font-display text-[9vw] font-bold leading-[0.95] tracking-tighter md:text-[5.5vw] text-[#aaaaaa]">
+          <h1 className="font-display text-[9vw] font-bold leading-[0.95] tracking-tighter text-white md:text-[5.5vw]">
             <div className="overflow-hidden py-1.5 md:py-3">
               <motion.span initial="hidden" animate="visible" variants={wordVariant}
                 transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
@@ -174,7 +164,7 @@ export function Hero() {
                 className="mr-4 inline-block md:mr-6">Digital</motion.span>
               <motion.span initial="hidden" animate="visible" variants={wordVariant}
                 transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.85 }}
-                className="text-italic-accent inline-block drop-shadow-[0_0_20px_rgba(20,184,166,0.25)]">Solutions</motion.span>
+                className="text-italic-accent inline-block drop-shadow-[0_0_24px_rgba(20,184,166,0.35)]">Solutions</motion.span>
             </div>
             <div className="overflow-hidden py-1.5 mt-3 md:py-3 md:mt-5">
               <motion.span initial="hidden" animate="visible" variants={wordVariant}
@@ -186,7 +176,7 @@ export function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.1, duration: 0.7 }}
-            className="mt-8 max-w-xl text-base leading-relaxed text-white/60 md:text-lg"
+            className="mt-8 max-w-xl text-base leading-relaxed text-white/72 md:text-lg"
           >
             From AI-powered chatbots to enterprise SaaS platforms — we are your one-stop digital transformation partner. Trusted by startups, SMEs, and enterprises across 8+ countries.
           </motion.p>
@@ -201,9 +191,9 @@ export function Hero() {
               Explore Services
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </MagneticButton>
-            <Link href="/contact" className="group relative text-sm font-medium uppercase tracking-wider text-white transition-colors duration-300 hover:text-accent">
+            <Link href="/contact" className="group relative text-sm font-medium uppercase tracking-wider text-white/85 transition-colors duration-300 hover:text-brand-mint">
               Free Consultation →
-              <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-100 bg-white transition-transform duration-500 group-hover:scale-x-0 group-hover:bg-accent" />
+              <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-100 bg-white/70 transition-transform duration-500 group-hover:scale-x-0 group-hover:bg-brand-mint" />
             </Link>
           </motion.div>
 
@@ -211,11 +201,11 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 0.8 }}
-            className="mt-10 flex flex-wrap items-center gap-6 text-xs text-white/30 tracking-wider"
+            className="mt-10 flex flex-wrap items-center gap-6 text-xs text-white/45 tracking-wider"
           >
             {["50+ Projects Shipped", "8+ Countries", "Reply in 24h"].map((badge) => (
               <span key={badge} className="flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-accent/60" />
+                <span className="h-1 w-1 rounded-full bg-brand-mint/70" />
                 {badge}
               </span>
             ))}
@@ -229,10 +219,10 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1 }}
-          className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 font-mono text-[9px] uppercase tracking-[0.25em] text-white/40"
+          className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 font-mono text-[9px] uppercase tracking-[0.25em] text-white/45"
         >
           <span>Scroll</span>
-          <div className="h-12 w-[1.5px] overflow-hidden rounded-full bg-white/15">
+          <div className="h-12 w-[1.5px] overflow-hidden rounded-full bg-white/20">
             <div className="scroll-line h-1/2 w-full bg-accent" />
           </div>
         </motion.div>
@@ -242,20 +232,22 @@ export function Hero() {
 }
 
 /* ─── Services (homepage teaser) ───────────────────────────────────────── */
-const ServiceCard = memo(function ServiceCard({ icon: Icon, t, d, tags, delay }) {
+const ServiceCard = memo(function ServiceCard({ t, d, tags, delay, i }) {
   return (
     <Reveal delay={delay}>
       <Link
         href="/services"
-        className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.015] p-8 transition-all duration-500 hover:border-accent/40 hover:bg-card hover:shadow-[0_20px_60px_-15px_rgba(20,184,166,0.25)]"
+        className="service-teaser-card group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.015] p-8 transition-all duration-500 hover:border-white/20 hover:bg-card hover:shadow-[0_18px_48px_-20px_rgba(17,24,39,0.28)]"
       >
-        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_20%_0%,rgba(255,255,255,0.04),transparent_40%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         <div>
-          <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition-all duration-300 group-hover:border-accent/30 group-hover:bg-accent/10 group-hover:shadow-[0_0_20px_rgba(20,184,166,0.15)]">
-            <Icon className="h-6 w-6 text-accent" strokeWidth={1.5} />
+          <div className="mb-6 flex items-center gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/35">0{String(i + 1)}</span>
+            <span className="h-px flex-1 bg-white/10" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-white/30">Service</span>
           </div>
-          <h3 className="font-display text-2xl font-semibold text-white transition-colors duration-300 group-hover:text-accent">{t}</h3>
-          <p className="mt-3 text-sm leading-relaxed text-white/60">{d}</p>
+          <h3 className="max-w-[12ch] font-display text-2xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-brand-mint">{t}</h3>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-white/60">{d}</p>
           <div className="mt-5 flex flex-wrap gap-2">
             {tags.map((tag) => (
               <span key={tag} className="rounded-full border border-white/5 bg-white/5 px-2.5 py-1 text-[10px] font-mono text-white/50 transition-colors duration-300 group-hover:border-accent/20 group-hover:text-accent/70">
@@ -264,8 +256,8 @@ const ServiceCard = memo(function ServiceCard({ icon: Icon, t, d, tags, delay })
             ))}
           </div>
         </div>
-        <div className="mt-8 flex items-center gap-2 text-sm font-medium text-accent">
-          Explore <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+        <div className="mt-8 flex items-center gap-2 text-sm font-medium text-brand-mint">
+          Explore <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </div>
       </Link>
     </Reveal>
@@ -275,7 +267,7 @@ const ServiceCard = memo(function ServiceCard({ icon: Icon, t, d, tags, delay })
 export function Services() {
   return (
     <section className="relative bg-background py-28">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_top_right,rgba(139,92,246,0.04),transparent)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_top_right,rgba(139,92,246,0.04),transparent)] dark-only" />
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <SectionLabel n="/ 01">Services</SectionLabel>
         <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -291,7 +283,7 @@ export function Services() {
           </Reveal>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {SERVICE_LIST.map((s, i) => <ServiceCard key={s.t} {...s} delay={i * 0.08} />)}
+          {SERVICE_LIST.map((s, i) => <ServiceCard key={s.t} {...s} i={i} delay={i * 0.08} />)}
         </div>
       </div>
     </section>
@@ -331,11 +323,8 @@ export function Stats() {
 export function AICapabilities() {
   return (
     <section className="relative overflow-hidden bg-background py-28">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(139,92,246,0.07),transparent_70%)]" />
-      <div className="pointer-events-none absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
-
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <SectionLabel n="/ 02">Artificial Intelligence</SectionLabel>
+        <SectionLabel n="/ 02" hideLine>Artificial Intelligence</SectionLabel>
         <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <Reveal>
             <h2 className="max-w-2xl font-display text-5xl font-bold leading-[0.95] md:text-6xl">
@@ -375,15 +364,15 @@ export function AICapabilities() {
         </div>
 
         <Reveal delay={0.3}>
-          <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <MagneticButton as="a" href="/services#ai" className="!border-violet-500/30 !bg-violet-500/10 !text-violet-300 hover:!bg-violet-500/20">
-              <Brain className="h-4 w-4" />
-              Explore AI Services
+          <div className="ai-capabilities-actions mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <MagneticButton as="a" href="/services#ai" className="ai-capabilities-cta-primary shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.45)]">
+              Explore Services
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </MagneticButton>
-            <Link href="/contact" className="group inline-flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-white/60 transition-colors hover:text-white">
-              Free AI Consultation <ArrowUpRight className="h-4 w-4" />
-            </Link>
+            <MagneticButton as="a" href="/contact" variant="outline" className="ai-capabilities-cta-secondary hover:bg-accent/10">
+              Free Consultation
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </MagneticButton>
           </div>
         </Reveal>
       </div>
@@ -478,7 +467,7 @@ export function TechStack() {
 
   return (
     <section className="relative overflow-hidden bg-background py-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_bottom_left,rgba(139,92,246,0.04),transparent_50%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_bottom_left,rgba(139,92,246,0.04),transparent_50%)] dark-only" />
       <div className="mx-auto mb-16 max-w-[1400px] px-6 md:px-10">
         <SectionLabel n="/ 04">Tech Stack</SectionLabel>
         <Reveal>
@@ -528,14 +517,12 @@ export function TechStack() {
 const ProcessCard = memo(function ProcessCard({ step, delay }) {
   return (
     <Reveal delay={delay}>
-      <div className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.015] p-8 transition-all duration-300 hover:border-accent/40 hover:bg-card hover:shadow-[0_20px_50px_-15px_rgba(20,184,166,0.2)]">
-        <div className="mb-5 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-accent/70 transition-all duration-300 group-hover:border-accent/30 group-hover:bg-accent/10 group-hover:text-accent">
-            <step.icon className="h-5 w-5" strokeWidth={1.5} />
-          </div>
-          <span className="rounded border border-accent/10 bg-accent/5 px-2 py-0.5 font-mono text-xs text-accent">{step.n}</span>
+      <div className="process-card group relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.015] p-8 transition-all duration-300 hover:border-white/20 hover:bg-card hover:shadow-[0_16px_36px_-20px_rgba(17,24,39,0.18)]">
+        <div className="mb-5 flex items-center justify-between gap-3">
+          <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/35">Step</span>
+          <span className="rounded-full border border-accent/10 bg-accent/5 px-2.5 py-1 font-mono text-xs text-accent">{step.n}</span>
         </div>
-        <h3 className="mb-3 font-display text-xl font-semibold text-white transition-colors duration-300 group-hover:text-accent">{step.t}</h3>
+        <h3 className="mb-3 font-display text-xl font-semibold leading-tight text-white transition-colors duration-300 group-hover:text-brand-mint">{step.t}</h3>
         <p className="flex-1 text-sm leading-relaxed text-white/60">{step.d}</p>
         <div className="mt-6 h-0.5 w-0 rounded-full bg-accent transition-all duration-500 group-hover:w-full" />
       </div>
@@ -578,7 +565,7 @@ export function HowWeWork() {
 export function Industries() {
   return (
     <section className="relative overflow-hidden bg-background py-28">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_50%,rgba(20,184,166,0.04),transparent)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_50%,rgba(20,184,166,0.04),transparent)] dark-only" />
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <SectionLabel n="/ 06">Industries</SectionLabel>
         <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -674,7 +661,7 @@ const WHY_ICONS = [Users, Brain, TrendingUp, Globe, Shield, Award, Sparkles, Clo
 export function WhyUs() {
   return (
     <section className="relative bg-background py-28">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_center,rgba(139,92,246,0.04),transparent)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_center,rgba(139,92,246,0.04),transparent)] dark-only" />
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid gap-16 md:grid-cols-2 md:items-start">
           {/* Sticky left */}
@@ -751,12 +738,12 @@ export function HomeCTA() {
       <motion.div
         animate={{ scale: [1, 1.1, 1], x: [-10, 10, -10] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[130px] -z-10"
+        className="dark-only absolute left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[130px] -z-10"
       />
       <motion.div
         animate={{ scale: [1, 1.2, 1], x: [20, -20, 20] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-1/4 bottom-1/4 h-[400px] w-[400px] rounded-full bg-brand-mint/10 blur-[110px] -z-10"
+        className="dark-only absolute right-1/4 bottom-1/4 h-[400px] w-[400px] rounded-full bg-brand-mint/10 blur-[110px] -z-10"
       />
       <div className="relative mx-auto max-w-[1000px] px-6 md:px-10">
         <Reveal>

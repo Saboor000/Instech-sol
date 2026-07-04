@@ -11,8 +11,8 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-italic: "Instrument Serif", serif;
 
-  /* Remap white → #aaaaaa so text-white, border-white/*, bg-white/* all use this tone */
-  --color-white: #aaaaaa;
+  /* Remap white → var(--white) so text-white, border-white/*, bg-white/* all use this tone */
+  --color-white: var(--white);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -42,6 +42,8 @@
 
 :root {
   --radius: 0.5rem;
+  --white: #aaaaaa;
+  --body-bg: oklch(0.14 0.01 285);
   --background: oklch(0.14 0.01 285);
   --foreground: #aaaaaa;
   --card: oklch(0.19 0.015 285);
@@ -65,18 +67,354 @@
   --brand-mint: oklch(0.78 0.14 165);
   /* Silver tone matching #C8D3E0 */
   --silver: #C8D3E0;
+  
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.06);
 }
 
 .dark {
   --background: oklch(0.14 0.01 285);
   --foreground: #aaaaaa;
+  --white: #aaaaaa;
+  --body-bg: oklch(0.14 0.01 285);
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.06);
+}
+
+.light {
+  --white: #111827;
+  --background: #f8f9ff;
+  
+  --body-bg:
+    radial-gradient(1100px 700px at 15% -5%, oklch(0.91 0.05 268 / 0.5), transparent 55%),
+    radial-gradient(900px 650px at 0% 60%, oklch(0.96 0.04 165 / 0.42), transparent 60%),
+    radial-gradient(1000px 700px at 100% 100%, oklch(0.95 0.04 245 / 0.42), transparent 60%),
+    linear-gradient(135deg, #e2e7f5 0%, #e9f1ea 34%, #f3f7ed 63%, #f6f8fe 100%);
+
+  --card: rgba(255, 255, 255, 0.7);
+  --card-foreground: #111827;
+  
+  --popover: rgba(255, 255, 255, 0.85);
+  --popover-foreground: #111827;
+
+  --primary-foreground: #ffffff;
+  --secondary: rgba(255, 255, 255, 0.5);
+  --secondary-foreground: #374151;
+
+  --muted: rgba(0, 0, 0, 0.05);
+  --muted-foreground: #4b5563;
+
+  --accent: oklch(0.65 0.14 165);
+  --accent-foreground: #111827;
+
+  --border: rgba(255, 255, 255, 0.5);
+  --input: rgba(255, 255, 255, 0.6);
+  --ring: oklch(0.58 0.2 295);
+
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+}
+
+/* Smooth theme-switching transitions */
+html.light,
+html.dark,
+html.light body,
+html.dark body,
+html.light .glass-card,
+html.dark .glass-card,
+html.light button,
+html.dark button,
+html.light input,
+html.dark input,
+html.light textarea,
+html.dark textarea,
+html.light header,
+html.dark header,
+html.light footer,
+html.dark footer,
+html.light nav,
+html.dark nav,
+html.light a,
+html.dark a,
+html.light span,
+html.dark span,
+html.light p,
+html.dark p,
+html.light h1,
+html.dark h1,
+html.light h2,
+html.dark h2,
+html.light h3,
+html.dark h3,
+html.light h4,
+html.dark h4,
+html.light h5,
+html.dark h5,
+html.light h6,
+html.dark h6,
+html.light svg,
+html.dark svg,
+html.light div[class*="border"],
+html.dark div[class*="border"] {
+  transition: background 300ms ease, background-color 300ms ease, border-color 300ms ease, color 300ms ease, box-shadow 300ms ease, backdrop-filter 300ms ease, -webkit-backdrop-filter 300ms ease;
+}
+
+/* Light mode specific layout overrides */
+.light section:not(#top) {
+  background-color: transparent !important;
+}
+
+.light main {
+  background-color: transparent !important;
+}
+
+.light footer {
+  background-color: transparent !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.light div:not(#top *)[class*="bg-background/30"],
+.light div:not(#top *)[class*="bg-background/50"],
+.light div:not(#top *)[class*="bg-background/40"],
+.light div:not(#top *)[class*="bg-background/80"] {
+  background-color: transparent !important;
+}
+
+/* Make grid lines visible but soft in light mode */
+.light .grid.bg-white\/5 {
+  background-color: rgba(17, 24, 39, 0.08) !important;
+}
+.light .grid.bg-white\/5 .bg-background {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Light mode overrides for cards */
+.light div:not(#top *)[class*="bg-gradient-to-b from-white/[0.01]"],
+.light div:not(#top *)[class*="bg-white/[0.01]"],
+.light div:not(#top *)[class*="bg-white/[0.015]"],
+.light div:not(#top *)[class*="bg-white/[0.02]"],
+.light div:not(#top *)[class*="bg-card/60"],
+.light div:not(#top *)[class*="bg-black/60"],
+.light div:not(#top *)[class*="bg-white/3"],
+.light div:not(#top *)[class*="bg-white/4"] {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Only apply card-style hover to actual card/block elements — exclude header, footer, nav links, and logo */
+.light div.group:not(#top *):not(footer *):not(header *)[class*="rounded-2xl"]:hover,
+.light div.group:not(#top *):not(footer *):not(header *)[class*="rounded-xl"]:hover,
+.light a.group:not(#top *):not(footer *):not(header *)[class*="rounded-2xl"]:hover,
+.light a.group:not(#top *):not(footer *):not(header *)[class*="rounded-xl"]:hover {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .service-teaser-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 249, 255, 0.96) 100%) !important;
+  border-color: rgba(17, 24, 39, 0.08) !important;
+  box-shadow: 0 10px 28px rgba(17, 24, 39, 0.05) !important;
+}
+
+.light .service-teaser-card:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.985) 0%, rgba(247, 248, 252, 0.985) 100%) !important;
+  border-color: rgba(17, 24, 39, 0.12) !important;
+  box-shadow: 0 16px 34px rgba(17, 24, 39, 0.07) !important;
+}
+
+.light .service-teaser-card .text-white\/60,
+.light .service-teaser-card .text-white\/50 {
+  color: rgba(17, 24, 39, 0.62) !important;
+}
+
+.light .service-teaser-card .text-white\/35,
+.light .service-teaser-card .text-white\/30,
+.light .service-teaser-card .text-white\/40 {
+  color: rgba(17, 24, 39, 0.38) !important;
+}
+
+.light .service-teaser-card span[class*="group-hover:border-accent/20"] {
+  border-color: rgba(17, 24, 39, 0.08) !important;
+  color: rgba(17, 24, 39, 0.68) !important;
+}
+
+.light .service-teaser-card:hover .text-brand-mint,
+.light .service-teaser-card:hover [class*="text-brand-mint"] {
+  color: #0f766e !important;
+}
+
+.light .process-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 249, 255, 0.95) 100%) !important;
+  border-color: rgba(17, 24, 39, 0.08) !important;
+  box-shadow: 0 10px 28px rgba(17, 24, 39, 0.045) !important;
+}
+
+.light .process-card:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(247, 248, 252, 0.98) 100%) !important;
+  border-color: rgba(17, 24, 39, 0.12) !important;
+  box-shadow: 0 14px 30px rgba(17, 24, 39, 0.07) !important;
+}
+
+.light .process-card .text-white\/35,
+.light .process-card .text-white\/60 {
+  color: rgba(17, 24, 39, 0.58) !important;
+}
+
+.light .process-card .text-accent {
+  color: #0f766e !important;
+}
+
+.light .process-card .bg-accent\/5 {
+  background-color: rgba(15, 118, 110, 0.08) !important;
+}
+
+/* Overwrite background grids */
+.light div:not(#top *)[class*="bg-[linear-gradient"] {
+  background-image: linear-gradient(to right, rgba(17, 24, 39, 0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(17, 24, 39, 0.04) 1px, transparent 1px) !important;
+}
+
+/* Remove decorative radial gradient overlays between sections in light mode */
+.light section:not(#top) > div[class*="bg-[radial-gradient"] {
+  display: none !important;
+}
+.light .dark-only {
+  display: none !important;
+}
+
+/* Header style overrides in light mode */
+.light header {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) !important;
+}
+
+.light header a[href="/"] > div:first-child {
+  background: #111827 !important;
+  border-color: rgba(17, 24, 39, 0.12) !important;
+  box-shadow: 0 10px 20px rgba(17, 24, 39, 0.08) !important;
+}
+
+.light header a[href="/"] > div:first-child img {
+  filter: brightness(1.05) contrast(1.05) !important;
+}
+
+.light header a[href="/"] .font-display {
+  color: #111827 !important;
+}
+
+.light header a[href="/"] .font-display span {
+  background: linear-gradient(to right, #0f766e, #7c3aed) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+.light header a[href="/"] .font-italic {
+  color: #0f766e !important;
+}
+
+/* Navbar active item styling in light mode */
+.light header nav a[class*="bg-white text-background"] {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+}
+.light header nav a[class*="text-white/70"] {
+  color: rgba(17, 24, 39, 0.7) !important;
+}
+.light header nav a[class*="text-white/70"]:hover {
+  color: #111827 !important;
+  background-color: rgba(17, 24, 39, 0.05) !important;
+}
+
+.light header .navbar-cta {
+  background: #111827 !important;
+  border-color: rgba(17, 24, 39, 0.15) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.08) !important;
+}
+
+.light header .navbar-cta:hover {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border-color: #0f172a !important;
+}
+
+/* Navbar dropdown — all internal divs must be transparent in light mode */
+.light .nav-dropdown > div:not([class*="-top-"]),
+.light .nav-dropdown div[class*="space-y"],
+.light .nav-dropdown div[class*="mt-3"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.light .nav-dropdown > div[class*="-top-"] {
+  background-color: rgba(255, 255, 255, 0.97) !important;
+  border-color: rgba(17, 24, 39, 0.1) !important;
+}
+
+.light .nav-dropdown p {
+  color: rgba(17, 24, 39, 0.4) !important;
+}
+
+.light .nav-dropdown-item,
+.light .nav-dropdown-cta {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.light .nav-dropdown-item:hover {
+  background: rgba(17, 24, 39, 0.05) !important;
+  box-shadow: none !important;
+}
+.light .nav-dropdown-item div:first-of-type {
+  color: rgba(17, 24, 39, 0.85) !important;
+}
+.light .nav-dropdown-item div + div {
+  color: rgba(17, 24, 39, 0.45) !important;
+}
+.light .nav-dropdown > div[class*="border-t"] {
+  border-color: rgba(17, 24, 39, 0.08) !important;
+}
+.light .nav-dropdown-cta {
+  color: var(--brand-mint) !important;
+}
+.light .nav-dropdown-cta:hover {
+  background: rgba(20, 184, 166, 0.06) !important;
+  box-shadow: none !important;
+}
+
+/* Mobile drawer style overrides in light mode */
+.light header div[class*="bg-background/90"] {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-top-color: rgba(17, 24, 39, 0.08) !important;
+}
+.light header div[class*="bg-background/90"] a {
+  color: rgba(17, 24, 39, 0.8) !important;
+}
+.light header div[class*="bg-background/90"] a:hover {
+  background-color: rgba(17, 24, 39, 0.05) !important;
+}
+
+/* Mute the glow blobs slightly in light mode for a softer look */
+.light div[class*="bg-primary/"],
+.light div[class*="bg-accent/"] {
+  opacity: 0.65 !important;
 }
 
 @layer base {
   * { border-color: var(--color-border); }
   html { scroll-behavior: smooth; }
   body {
-    background-color: var(--color-background);
+    background: var(--body-bg);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     overflow-x: hidden;
@@ -91,10 +429,6 @@
   /* Performance hints */
   img {
     content-visibility: auto;
-  }
-  motion.div, .group {
-    will-change: transform, opacity;
-    contain: layout style paint;
   }
 }
 
@@ -189,10 +523,10 @@
 
 /* Glassmorphism card utility */
 @utility glass-card {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--glass-bg, rgba(255, 255, 255, 0.02));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.06));
 }
 
 /* Glow utilities */
@@ -304,4 +638,73 @@
 /* Responsive container max width tweak */
 @layer base {
   .max-w-350 { max-width: 1400px; }
+}
+
+/* ─── Global: Remove accent/purple borders on card hover, shadow only ──── */
+/*
+   Every card across the app uses hover:border-accent/*, hover:border-brand-purple/*,
+   or group-hover:border-accent/* to flash a colored border on hover.
+   We neutralise these globally so borders stay transparent and only
+   shadow provides the depth cue — in both dark and light themes.
+*/
+
+/* Main card containers that change border on hover */
+.group:hover[class*="border"][class*="rounded"],
+a.group:hover[class*="border"][class*="rounded"],
+div.group:hover[class*="border"][class*="rounded"] {
+  border-color: transparent !important;
+}
+
+/* Inner icon boxes inside cards that get a border on group-hover */
+.group:hover [class*="group-hover:border-accent"],
+.group:hover [class*="group-hover:border-brand-purple"],
+.group:hover [class*="group-hover:border-white"] {
+  border-color: transparent !important;
+}
+
+/* Pill/tag spans inside cards */
+.group:hover span[class*="group-hover:border-accent"] {
+  border-color: transparent !important;
+}
+
+/* Specific Tailwind hover-border utilities — override with transparent */
+[class*="hover:border-accent"]:hover,
+[class*="hover:border-brand-purple"]:hover,
+[class*="hover:border-brand-mint"]:hover,
+[class*="hover:border-violet"]:hover,
+[class*="hover:border-purple"]:hover,
+[class*="hover:border-indigo"]:hover,
+[class*="hover:border-blue"]:hover,
+[class*="hover:border-emerald"]:hover,
+[class*="hover:border-green"]:hover,
+[class*="hover:border-teal"]:hover,
+[class*="hover:border-cyan"]:hover,
+[class*="hover:border-sky"]:hover,
+[class*="hover:border-pink"]:hover,
+[class*="hover:border-rose"]:hover,
+[class*="hover:border-orange"]:hover,
+[class*="hover:border-amber"]:hover {
+  border-color: transparent !important;
+}
+
+/* group-hover variants */
+.group:hover [class*="group-hover:border-accent"],
+.group:hover [class*="group-hover:border-brand-purple"],
+.group:hover [class*="group-hover:border-violet"],
+.group:hover [class*="group-hover:border-emerald"],
+.group:hover [class*="group-hover:border-blue"] {
+  border-color: transparent !important;
+}
+
+/* Catch-all: any element using hover:border-brand-purple/* */
+[class*="hover:border-brand-purple"]:hover {
+  border-color: transparent !important;
+}
+
+/* Navbar / button pill links that change border are intentional — restore them */
+header [class*="hover:border-accent"]:hover,
+header [class*="hover:border-white"]:hover,
+header button[class*="hover:border"]:hover,
+.rounded-full[class*="hover:border-accent"]:hover {
+  border-color: revert;
 }

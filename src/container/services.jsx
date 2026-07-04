@@ -13,10 +13,10 @@ const FILTERS = ["All", "Development", "AI", "Design", "Infrastructure", "Strate
 const SERVICE_FILTERS = {
   All: ALL_SERVICES.map((s) => s.id),
   Development: ["web", "mobile", "shopify", "backend"],
-  AI:          ["ai"],
-  Design:      ["design"],
+  AI: ["ai"],
+  Design: ["design"],
   Infrastructure: ["cloud", "maintenance"],
-  Strategy:    ["consulting"],
+  Strategy: ["consulting"],
 };
 
 const BORDER_GRADIENTS = {
@@ -117,11 +117,10 @@ function TechCategorySection() {
             <button
               key={cat.label}
               onClick={() => setActive(i)}
-              className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 ${
-                active === i
+              className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 ${active === i
                   ? "border-accent bg-accent/10 text-accent"
                   : "border-white/10 text-white/60 hover:border-white/25 hover:text-white/80"
-              }`}
+                }`}
             >
               {cat.label}
             </button>
@@ -173,17 +172,16 @@ export default function ServicesPage() {
       />
 
       {/* Filter bar */}
-      <section className="sticky top-[72px] z-30 border-b border-white/5 bg-background/80 backdrop-blur-xl py-4">
+      <section className="sticky top-[72px] z-30 bg-background/80 backdrop-blur-xl py-4">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-2 px-6 md:px-10">
           {FILTERS.map((f) => (
             <button
               key={f}
               onClick={() => setActiveFilter(f)}
-              className={`rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
-                activeFilter === f
+              className={`rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${activeFilter === f
                   ? "border-accent bg-accent/10 text-accent"
                   : "border-white/10 text-white/50 hover:border-white/25 hover:text-white/80"
-              }`}
+                }`}
             >
               {f}
             </button>
@@ -215,8 +213,7 @@ export default function ServicesPage() {
 
       {/* AI Capabilities deep-dive */}
       <section className="relative overflow-hidden py-28">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(139,92,246,0.06),transparent)]" />
-        <div className="pointer-events-none absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(139,92,246,0.06),transparent)] dark-only" />
         <div className="mx-auto max-w-[1400px] px-6 md:px-10">
           <SectionLabel n="/ 02">AI Capabilities</SectionLabel>
           <Reveal>
@@ -235,14 +232,14 @@ export default function ServicesPage() {
                 <div className="group relative overflow-hidden rounded-xl border border-white/5 bg-gradient-to-b from-white/[0.01] to-transparent p-6 transition-all duration-500 hover:border-brand-purple/20 hover:bg-white/[0.03] hover:shadow-[0_12px_40px_-12px_rgba(139,92,246,0.15)] hover:-translate-y-0.5">
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(139,92,246,0.08),transparent_50%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   <div className="absolute top-0 left-0 h-[2px] w-0 bg-gradient-to-r from-brand-purple to-brand-mint transition-all duration-500 group-hover:w-full" />
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-semibold tracking-widest text-white/30 group-hover:text-brand-mint transition-colors duration-300">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <ArrowUpRight className="h-3.5 w-3.5 text-white/20 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand-mint" />
                   </div>
-                  
+
                   <h3 className="font-display text-base font-semibold text-white tracking-tight transition-colors duration-300 group-hover:text-brand-mint mt-4">
                     {cap.t}
                   </h3>
