@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, MapPin, Clock } from "lucide-react";
-import { Reveal, SectionLabel, CTASection, PageHero, Dot } from "@/components/site/shared";
+import { Reveal, SectionLabel, PageHero, Dot } from "@/components/site/shared";
 
 const ROLES = [
   { t: "Senior Full-Stack Engineer", loc: "Islamabad / Remote", type: "Full-time", team: "Engineering" },
@@ -31,30 +31,62 @@ export default function CareersPage() {
         description="We hire senior humans who take their craft personally. If that's you, we should talk."
       />
 
-      <section className="relative border-b border-white/5 py-24">
+      <section className="relative py-24">
         <div className="mx-auto max-w-[1400px] px-6 md:px-10">
           <SectionLabel n="/ 01">Open roles</SectionLabel>
-          <div className="grid gap-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {ROLES.map((r, i) => (
               <Reveal key={r.t} delay={i * 0.05}>
                 <motion.a
                   href="mailto:careers@instechsol.com"
-                  whileHover={{ x: 8 }}
+                  whileHover={{ y: -6 }}
                   transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className="group grid gap-4 rounded-lg border border-white/10 bg-card/40 p-6 transition-colors hover:border-accent md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-center"
+                  className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/5 bg-gradient-to-b from-white/[0.015] to-transparent p-6 transition-all duration-500 hover:border-accent/30 hover:bg-white/[0.02] hover:shadow-[0_12px_40px_-12px_rgba(20,184,166,0.2)]"
                 >
-                  <div>
-                    <div className="mb-1 font-mono text-xs text-accent">{r.team}</div>
-                    <h3 className="font-display text-2xl font-semibold md:text-3xl">{r.t}</h3>
+                  {/* Subtle high-tech grid overlay */}
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.012)_1px,transparent_1px)] bg-[size:16px_16px] transition-all duration-500 group-hover:bg-[linear-gradient(rgba(20,184,166,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.025)_1px,transparent_1px)]" />
+                  
+                  {/* Top glowing gradient border line */}
+                  <div className="absolute top-0 left-0 h-[2px] w-0 bg-gradient-to-r from-accent to-emerald-400 transition-all duration-500 group-hover:w-full" />
+                  
+                  {/* Subtle inner radial glow */}
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(20,184,166,0.08),transparent_50%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  
+                  <div className="relative z-10 w-full">
+                    {/* Header Row */}
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="inline-block rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 text-[9px] font-mono font-semibold tracking-wider text-accent uppercase">
+                        {r.team}
+                      </span>
+                      <span className="font-mono text-[10px] text-white/20 group-hover:text-accent/60 transition-colors duration-300">
+                        // {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    
+                    {/* Role Title */}
+                    <h3 className="font-display text-xl font-bold text-white tracking-tight transition-colors duration-300 group-hover:text-accent mb-6 leading-snug">
+                      {r.t}
+                    </h3>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-white/70">
-                    <MapPin className="h-4 w-4 text-accent" /> {r.loc}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-white/70">
-                    <Clock className="h-4 w-4 text-accent" /> {r.type}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm uppercase tracking-wider text-white/60 transition-colors group-hover:text-accent">
-                    Apply <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
+                  
+                  <div className="relative z-10 mt-auto w-full">
+                    {/* Metadata details */}
+                    <div className="space-y-2.5 border-t border-white/5 pt-4 pb-5">
+                      <div className="flex items-center gap-2 text-xs text-white/50 transition-colors duration-300 group-hover:text-white/70">
+                        <MapPin className="h-3.5 w-3.5 text-accent/60 transition-colors duration-300 group-hover:text-accent" />
+                        {r.loc}
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-white/50 transition-colors duration-300 group-hover:text-white/70">
+                        <Clock className="h-3.5 w-3.5 text-accent/60 transition-colors duration-300 group-hover:text-accent" />
+                        {r.type}
+                      </div>
+                    </div>
+                    
+                    {/* Apply action pill button */}
+                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-white/80 transition-all duration-300 group-hover:border-accent/40 group-hover:bg-accent/10 group-hover:text-accent group-hover:shadow-[0_0_15px_rgba(20,184,166,0.1)]">
+                      Apply Now
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
                   </div>
                 </motion.a>
               </Reveal>
@@ -68,7 +100,7 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <section className="relative border-b border-white/5 py-32">
+      <section className="relative py-32">
         <div className="mx-auto max-w-[1400px] px-6 md:px-10">
           <SectionLabel n="/ 02">Why here</SectionLabel>
           <Reveal>
@@ -89,8 +121,7 @@ export default function CareersPage() {
           </div>
         </div>
       </section>
-
-      <CTASection />
     </>
   );
 }
+

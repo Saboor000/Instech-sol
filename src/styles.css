@@ -11,6 +11,9 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-italic: "Instrument Serif", serif;
 
+  /* Remap white → #aaaaaa so text-white, border-white/*, bg-white/* all use this tone */
+  --color-white: #aaaaaa;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -40,31 +43,33 @@
 :root {
   --radius: 0.5rem;
   --background: oklch(0.14 0.01 285);
-  --foreground: oklch(0.97 0.005 285);
+  --foreground: #aaaaaa;
   --card: oklch(0.19 0.015 285);
-  --card-foreground: oklch(0.97 0.005 285);
+  --card-foreground: #aaaaaa;
   --popover: oklch(0.19 0.015 285);
-  --popover-foreground: oklch(0.97 0.005 285);
+  --popover-foreground: #aaaaaa;
   --primary: oklch(0.58 0.2 295);
   --primary-foreground: oklch(0.98 0.005 285);
   --secondary: oklch(0.24 0.015 285);
-  --secondary-foreground: oklch(0.97 0.005 285);
+  --secondary-foreground: #aaaaaa;
   --muted: oklch(0.24 0.015 285);
-  --muted-foreground: oklch(0.66 0.02 285);
+  --muted-foreground: oklch(0.55 0.02 240);
   --accent: oklch(0.78 0.14 165);
   --accent-foreground: oklch(0.14 0.01 285);
   --destructive: oklch(0.6 0.22 25);
-  --destructive-foreground: oklch(0.97 0.005 285);
+  --destructive-foreground: #aaaaaa;
   --border: oklch(0.3 0.02 285 / 60%);
   --input: oklch(0.3 0.02 285);
   --ring: oklch(0.58 0.2 295);
   --brand-purple: oklch(0.58 0.2 295);
   --brand-mint: oklch(0.78 0.14 165);
+  /* Silver tone matching #C8D3E0 */
+  --silver: #C8D3E0;
 }
 
 .dark {
   --background: oklch(0.14 0.01 285);
-  --foreground: oklch(0.97 0.005 285);
+  --foreground: #aaaaaa;
 }
 
 @layer base {
@@ -82,6 +87,14 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+  }
+  /* Performance hints */
+  img {
+    content-visibility: auto;
+  }
+  motion.div, .group {
+    will-change: transform, opacity;
+    contain: layout style paint;
   }
 }
 
@@ -167,4 +180,128 @@
 }
 @utility scroll-line {
   animation: scroll-line 2.4s ease-in-out infinite;
+}
+
+
+
+
+/* ─── Additional animations & utilities ─────────────────────────────────── */
+
+/* Glassmorphism card utility */
+@utility glass-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Glow utilities */
+@utility glow-accent {
+  box-shadow: 0 0 30px rgba(20, 184, 166, 0.25);
+}
+@utility glow-primary {
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.25);
+}
+
+/* Gradient text */
+@utility text-gradient-accent {
+  background: linear-gradient(135deg, var(--brand-mint) 0%, var(--brand-purple) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Float animation for decorative elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+@utility float-slow {
+  animation: float 6s ease-in-out infinite;
+}
+@utility float-medium {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Shimmer effect for loading states */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@utility shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.04) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* Perspective for 3D card effects */
+@utility perspective-distant {
+  perspective: 1200px;
+}
+
+/* Gradient border utility */
+@utility gradient-border {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(20,184,166,0.3), rgba(139,92,246,0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+}
+
+/* Noise texture overlay for cards */
+@utility card-noise {
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+  }
+}
+
+/* Smooth fade-up for list items */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@utility animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+/* Scale-in for icons/badges */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@utility animate-scale-in {
+  animation: scale-in 0.4s ease-out both;
+}
+
+/* Stagger helper classes */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Horizontal rule gradient */
+@utility hr-gradient {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.1) 70%, transparent);
+}
+
+/* Responsive container max width tweak */
+@layer base {
+  .max-w-350 { max-width: 1400px; }
 }

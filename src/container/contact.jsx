@@ -17,17 +17,13 @@ function AnimatedField({ f }) {
   const active = focused || val.length > 0;
   return (
     <label className="relative block">
-      <motion.span
-        animate={{
-          y: active ? -18 : 8,
-          scale: active ? 0.82 : 1,
-          color: focused ? "hsl(var(--accent))" : "rgba(255,255,255,0.5)",
-        }}
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className="pointer-events-none absolute left-0 origin-left text-sm uppercase tracking-widest"
+      <span
+        className={`pointer-events-none absolute left-0 origin-left text-sm uppercase tracking-widest transition-all duration-200 ease-out ${
+          active ? "-translate-y-[18px] scale-[0.82] text-accent" : "translate-y-2 text-white/50"
+        } ${focused ? "text-accent" : ""}`}
       >
         {f.l}
-      </motion.span>
+      </span>
       <input
         required={f.required}
         type={f.t}
@@ -36,15 +32,11 @@ function AnimatedField({ f }) {
         onChange={(e) => setVal(e.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        className="peer relative w-full bg-transparent pb-3 pt-6 text-lg text-white outline-none"
+        className="relative w-full bg-transparent pb-3 pt-6 text-lg text-white outline-none"
       />
       <span className="absolute bottom-0 left-0 h-px w-full bg-white/15" />
-      <motion.span
-        initial={false}
-        animate={{ scaleX: focused ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        style={{ transformOrigin: "left" }}
-        className="absolute bottom-0 left-0 h-px w-full bg-accent"
+      <span
+        className={`absolute bottom-0 left-0 h-px bg-accent transition-all duration-300 ease-out ${focused ? "w-full" : "w-0"}`}
       />
     </label>
   );
@@ -56,17 +48,13 @@ function AnimatedTextarea() {
   const active = focused || val.length > 0;
   return (
     <label className="relative block">
-      <motion.span
-        animate={{
-          y: active ? -18 : 8,
-          scale: active ? 0.82 : 1,
-          color: focused ? "hsl(var(--accent))" : "rgba(255,255,255,0.5)",
-        }}
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className="pointer-events-none absolute left-0 origin-left text-sm uppercase tracking-widest"
+      <span
+        className={`pointer-events-none absolute left-0 origin-left text-sm uppercase tracking-widest transition-all duration-200 ease-out ${
+          active ? "-translate-y-[18px] scale-[0.82] text-accent" : "translate-y-2 text-white/50"
+        } ${focused ? "text-accent" : ""}`}
       >
         Tell us about your project
-      </motion.span>
+      </span>
       <textarea
         required
         name="message"
@@ -78,12 +66,8 @@ function AnimatedTextarea() {
         className="w-full resize-none bg-transparent pb-3 pt-6 text-lg text-white outline-none"
       />
       <span className="absolute bottom-0 left-0 h-px w-full bg-white/15" />
-      <motion.span
-        initial={false}
-        animate={{ scaleX: focused ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        style={{ transformOrigin: "left" }}
-        className="absolute bottom-0 left-0 h-px w-full bg-accent"
+      <span
+        className={`absolute bottom-0 left-0 h-px bg-accent transition-all duration-300 ease-out ${focused ? "w-full" : "w-0"}`}
       />
     </label>
   );
@@ -117,8 +101,8 @@ export default function ContactPage() {
                 <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-white/50">
                   <Mail className="h-4 w-4 text-accent" /> Email
                 </div>
-                <a href="mailto:hello@instechsol.com" className="font-display text-2xl hover:text-accent md:text-3xl">
-                  hello@instechsol.com
+                <a href="mailto:Info@instechsol.com" className="font-display text-2xl hover:text-accent md:text-3xl">
+                  Info@instechsol.com
                 </a>
               </div>
               <div>
@@ -145,20 +129,13 @@ export default function ContactPage() {
               viewport={{ once: true, margin: "-80px" }}
               variants={{
                 hidden: {},
-                visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+                visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
               }}
               className="relative overflow-hidden rounded-2xl border border-white/10 bg-card/40 p-8 backdrop-blur-sm md:p-10"
             >
-              <motion.div
-                aria-hidden
-                className="pointer-events-none absolute -inset-px rounded-2xl opacity-40"
-                style={{
-                  background:
-                    "conic-gradient(from 0deg, transparent 0deg, hsl(var(--accent)/0.5) 60deg, transparent 120deg)",
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-              />
+              {/* Static accent border — no rotation animation */}
+              <div className="pointer-events-none absolute inset-0 rounded-2xl border border-accent/10" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-1/2 bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
               <div className="relative rounded-2xl bg-card/60 p-1">
                 <AnimatePresence mode="wait">
                   {status !== "sent" ? (

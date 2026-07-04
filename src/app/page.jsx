@@ -1,5 +1,5 @@
-import IndexPage from "@/container/index.jsx";
+import HomePageSections from "@/container/home-sections.jsx";
 
 export default function Page() {
-  return <IndexPage />;
+  return <HomePageSections />;
 }
